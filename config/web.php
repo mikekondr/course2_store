@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'name' => 'Store',
+    'language' => 'uk-UA',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -50,6 +51,19 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+            ],
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+//                    'sourceLanguage' => 'en-US',
+//                    'fileMap' => [
+//                        'app'       => 'app.php',
+//                        'app/error' => 'error.php',
+//                    ],
+                ],
             ],
         ],
     ],
