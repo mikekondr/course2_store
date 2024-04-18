@@ -56,10 +56,12 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'fullname' => 'Fullname',
-            'new_password' => 'Password',
-            'role' => 'Role',
+            'username' => Yii::t('app/users', 'Username'),
+            'fullname' => Yii::t('app/users', 'Fullname'),
+            'new_password' => Yii::t('app/users', 'Password'),
+            'role' => Yii::t('app/users', 'Role'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 

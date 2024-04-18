@@ -37,21 +37,32 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
 
+    $classifiers = [
+        [
+            'label' => Yii::t('app/users', 'Users'),
+            'url' => ['/users/index'],
+            'visible' => Yii::$app->user->can('manageUsers')
+        ],
+        [
+            'label' => Yii::t('app/categories', 'Categories'),
+            'url' => ['/categories/index'],
+            'visible' => Yii::$app->user->can('viewClassifiers'),
+        ]
+    ];
+
     $menuItems = [
         //['label' => 'Home', 'url' => ['/site/index']],
-        Yii::$app->user->can('manageUsers')
-            ? ['label' => Yii::t('app', 'Users'), 'url' => ['/users/index']]
-            : '',
+        ['label' => Yii::t('app', 'Classifiers'), 'items' => $classifiers, 'visible' => in_array(true, array_column($classifiers, 'visible'))],
         ['label' => 'About', 'url' => ['/site/about'], 'visible' => Yii::$app->user->can('editOrders')],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
 
     $menuItems[] = Yii::$app->user->isGuest
-        ? ['label' => 'Login', 'url' => ['/site/login']]
+        ? ['label' => Yii::t('app','Login'), 'url' => ['/site/login']]
         : '<li class="nav-item ms-auto">'
         . Html::beginForm(['/site/logout'])
         . Html::submitButton(
-            'Logout (' . Yii::$app->user->identity->username . ')',
+            Yii::t('app','Logout') . ' (' . Yii::$app->user->identity->username . ')',
             ['class' => 'nav-link btn btn-link logout']
         )
         . Html::endForm()

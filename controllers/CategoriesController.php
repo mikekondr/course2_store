@@ -2,18 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Users;
-use Yii;
+use app\models\Categories;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UsersController implements the CRUD actions for Users model.
+ * CategoriesController implements the CRUD actions for Categories model.
  */
-class UsersController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * @inheritDoc
@@ -23,17 +21,8 @@ class UsersController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                  'class' => AccessControl::class,
-                  'rules' => [
-                      [
-                        'allow' => true,
-                        'roles' => ['manageUsers'],
-                      ],
-                  ],
-                ],
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -43,22 +32,24 @@ class UsersController extends Controller
     }
 
     /**
-     * Lists all Users models.
+     * Lists all Categories models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Users::find(),
+            'query' => Categories::find(),
+            /*
             'pagination' => [
-                'pageSize' => 25
+                'pageSize' => 50
             ],
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
                 ]
             ],
+            */
         ]);
 
         return $this->render('index', [
@@ -67,7 +58,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Displays a single Users model.
+     * Displays a single Categories model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -80,19 +71,18 @@ class UsersController extends Controller
     }
 
     /**
-     * Creates a new Users model.
+     * Creates a new Categories model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Users();
+        $model = new Categories();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $model->password = \Yii::$app->getSecurity()->generatePasswordHash($model->new_password);
-                if ($model->save())
-                    return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                //return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -104,7 +94,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Updates an existing Users model.
+     * Updates an existing Categories model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -114,11 +104,9 @@ class UsersController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
-            if ($model->new_password !== '111')
-                $model->password = \Yii::$app->getSecurity()->generatePasswordHash($model->new_password);
-            if ($model->save())
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -127,7 +115,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Deletes an existing Users model.
+     * Deletes an existing Categories model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -141,27 +129,18 @@ class UsersController extends Controller
     }
 
     /**
-     * Finds the Users model based on its primary key value.
+     * Finds the Categories model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Users the loaded model
+     * @return Categories the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Users::findOne(['id' => $id])) !== null) {
+        if (($model = Categories::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public static function get_roles() : array
-    {
-        $roles = [];
-        foreach (\Yii::$app->authManager->getRoles() as $role) {
-            $roles[$role->name] = Yii::t('app/users', $role->name);
-        }
-        return $roles;
     }
 }
