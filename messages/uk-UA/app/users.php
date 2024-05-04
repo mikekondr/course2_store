@@ -15,5 +15,6 @@ return [
 
     //forms
     'Create Users' => 'Створення користувача',
-    'Update Users' => 'Оновлення користувача'
+    'Update Users' => 'Оновлення користувача',
+    'Remember Me' => 'Запамʼятати мене',
 ];
