@@ -70,15 +70,6 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function actionViewModal($id)
-    {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-
-
     /**
      * Creates a new Categories model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -150,16 +141,6 @@ class CategoriesController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    public static function get_categories()
-    {
-        $result = [];
-        $model = Categories::find()->addSelect('id, name')->all();
-        foreach ($model as $value) {
-            $result[$value->id] = $value->name;
-        }
-        return $result;
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

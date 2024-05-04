@@ -58,14 +58,13 @@ $config = [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/messages',
+//                    'sourceLanguage' => 'en-US',
+//                    'fileMap' => [
+//                        'app'       => 'app.php',
+//                        'app/error' => 'error.php',
+//                    ],
                 ],
             ],
-        ],
-        'formatter' => [
-            'dateFormat' => 'dd.MM.yyyy',
-            'datetimeFormat' => 'HH:mm dd.MM.yyyy',
-            'timeFormat' => 'HH:mm',
-            'timeZone' => 'Europe/Kiev',
         ],
     ],
     'params' => $params,

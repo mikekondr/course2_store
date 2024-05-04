@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\icons\Icon;
-Icon::map($this);
 
 /** @var yii\web\View $this */
 /** @var app\models\Categories $model */
@@ -17,8 +15,7 @@ Icon::map($this);
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
-        <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-danger']) ?>
+        <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

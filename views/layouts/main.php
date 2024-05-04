@@ -39,20 +39,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     $classifiers = [
         [
-            'label' => Yii::t('app/categories', 'Categories'),
-            'url' => ['/categories/index'],
-            'visible' => Yii::$app->user->can('viewClassifiers'),
-        ],
-        [
-            'label' => Yii::t('app/goods', 'Goods'),
-            'url' => ['/goods/index'],
-            'visible' => Yii::$app->user->can('viewClassifiers'),
-        ],
-        [
             'label' => Yii::t('app/users', 'Users'),
             'url' => ['/users/index'],
             'visible' => Yii::$app->user->can('manageUsers')
         ],
+        [
+            'label' => Yii::t('app/categories', 'Categories'),
+            'url' => ['/categories/index'],
+            'visible' => Yii::$app->user->can('viewClassifiers'),
+        ]
     ];
 
     $menuItems = [

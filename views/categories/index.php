@@ -6,13 +6,11 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use app\components\MyHelpers;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app/categories','Categories');
 $this->params['breadcrumbs'][] = $this->title;
-\app\assets\MyModalViewAsset::register($this);
 ?>
 <div class="categories-index">
 
@@ -28,12 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => array_merge([
+        'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
-        ], MyHelpers::getCreatedUpdatedGridCols(), [
+            'created_at:datetime',
+            'updated_at:datetime',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Categories $model, $key, $index, $column) {
@@ -42,18 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visibleButtons' => [
                     'update' => Yii::$app->user->can('editClassifiers'),
                     'delete' => Yii::$app->user->can('editClassifiers'),
-                ],
-                'contentOptions' => [
-                    'style' => 'width: 80px;',
-                    'nowrap' => true,
                 ]
             ],
-        ]),
+        ],
         'rowOptions' => function ($model, $key, $index, $column) {
             return [
                 'data-id' => $model->id,
-                //'onclick' => 'location.href="'. Url::toRoute(['/categories/view', 'id' => $model->id]) .'"',
-                'onclick' => 'show_modal(' . $model->id . ', "'. Html::encode($model->name) .'", "' . Url::toRoute(["categories/view-modal"]) .'")',
+                'onclick' => 'location.href="'. Url::toRoute(['/categories/view', 'id' => $model->id]) .'"',
                 'style' => 'cursor:pointer',
             ];
         },

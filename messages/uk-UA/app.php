@@ -9,8 +9,6 @@ return [
     'Add new' => 'Додати',
     'Edit' => 'Редагувати',
     'Delete' => 'Видалити',
-    'Search' => 'Пошук',
-    'Reset' => 'Скинути',
 
     'Are you sure you want to delete this item?' => 'Ви впевнені, що хочете видалити цей запис?',
 
@@ -18,6 +16,4 @@ return [
 
     'Logout' => 'Вийти',
     'Login' => 'Увійти',
-    'Login form' => 'Вхід',
-    'Please fill out the following fields to login' => 'Будь ласка, заповніть поля нижче для входу'
 ];

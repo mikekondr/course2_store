@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\icons\Icon;
-Icon::map($this);
+
 /** @var yii\web\View $this */
 /** @var app\models\Users $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -22,8 +21,7 @@ Icon::map($this);
     <?= $form->field($model, 'role')->dropDownList(\app\controllers\UsersController::get_roles()) ?>
 
     <div class="form-group">
-        <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
-        <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-danger']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
