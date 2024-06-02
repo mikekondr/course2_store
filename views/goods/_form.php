@@ -5,21 +5,19 @@ use yii\widgets\ActiveForm;
 use kartik\icons\Icon;
 Icon::map($this);
 /** @var yii\web\View $this */
-/** @var app\models\Users $model */
+/** @var app\models\Goods $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="users-form">
+<div class="goods-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'vendor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'new_password')->passwordInput(['maxlength' => true, 'value'=>'111']) ?>
-
-    <?= $form->field($model, 'role')->dropDownList(\app\controllers\UsersController::get_roles()) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(\app\controllers\CategoriesController::get_categories()); ?>
 
     <div class="form-group">
         <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>

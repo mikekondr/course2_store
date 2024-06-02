@@ -79,6 +79,13 @@ class UsersController extends Controller
         ]);
     }
 
+    public function actionViewModal($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     /**
      * Creates a new Users model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -153,7 +160,7 @@ class UsersController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 
     public static function get_roles() : array

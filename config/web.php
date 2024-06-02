@@ -58,19 +58,15 @@ $config = [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/messages',
-//                    'sourceLanguage' => 'en-US',
-//                    'fileMap' => [
-//                        'app'       => 'app.php',
-//                        'app/error' => 'error.php',
-//                    ],
                 ],
             ],
         ],
-    ],
-    'modules' => [
-        'gridview' =>  [
-            'class' => '\kartik\grid\Module'
-        ]
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
+            'datetimeFormat' => 'HH:mm dd.MM.yyyy',
+            'timeFormat' => 'HH:mm',
+            'timeZone' => 'Europe/Kiev',
+        ],
     ],
     'params' => $params,
 ];

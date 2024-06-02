@@ -15,10 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="categories-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (!Yii::$app->request->isAjax): ?>
+        <h1><?= Html::encode($this->title) ?></h1>
+    <?php endif; ?>
 
     <p>
-    <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
+    <?php if (!Yii::$app->request->isAjax): ?>
+        <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
+    <?php endif; ?>
     <?php if (Yii::$app->user->can('editClassifiers')): ?>
         <?= Html::a(Yii::t('app','Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app','Delete'), ['delete', 'id' => $model->id], [
