@@ -50,9 +50,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ]
     ];
 
+    $goods_moves = [
+        [
+            'label' => Yii::t('app/docs', 'Documents'),
+            'url' => ['/documents/index'],
+            'visible' => Yii::$app->user->can('viewOperations'),
+        ],
+        [
+            'label' => Yii::t('app/goods', 'Remains'),
+            'url' => ['/remains/index'],
+            'visible' => Yii::$app->user->can('viewRemains'),
+        ]
+    ];
+
     $menuItems = [
         //['label' => 'Home', 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'Classifiers'), 'items' => $classifiers, 'visible' => in_array(true, array_column($classifiers, 'visible'))],
+        ['label' => Yii::t('app', 'Goods circulation'), 'items' => $goods_moves, 'visible' => in_array(true, array_column($goods_moves, 'visible'))],
         ['label' => 'About', 'url' => ['/site/about'], 'visible' => Yii::$app->user->can('editOrders')],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];

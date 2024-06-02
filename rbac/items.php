@@ -11,6 +11,10 @@ return [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'View classifiers',
     ],
+    'viewRemains' => [
+        'type' => Item::TYPE_PERMISSION,
+        'description' => 'View remains of goods and it\'s consignments'
+    ],
     'editClassifiers' => [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'Edit (add, update, delete) classifiers',
@@ -67,6 +71,7 @@ return [
             'editClassifiers',
             'editOperations',
             'editOrders',
+            'viewRemains',
         ],
     ],
     'storekeeper' => [
@@ -75,7 +80,8 @@ return [
         'children' => [
             'viewClassifiers',
             'editOperations',
-            'viewOrders'
+            'viewOrders',
+            'viewRemains',
         ],
     ],
     'client' => [
@@ -83,6 +89,7 @@ return [
         'description' => 'Client',
         'children' => [
             'editOwnOrders',
+            'viewRemains',
         ],
     ]
 ];
