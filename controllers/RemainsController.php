@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Remains;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,11 +28,10 @@ class RemainsController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionCirculation()
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Remains::find(),
-                //->where(['>=', 'count', '0']),
             'pagination' => [
                 'pageSize' => 50
             ],
@@ -42,7 +42,27 @@ class RemainsController extends Controller
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('circulation', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionRemains()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => (new Query())
+                ->select("r.good_id, r.consignment_id, SUM(r.count) count, g.name,
+                    c.created_at cons_date, c.price, g.expiry")
+                ->from(['r'=>'remains'])
+                ->groupBy('good_id, consignment_id')
+                ->leftJoin(['g'=>'goods'], 'g.id = r.good_id')
+                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id'),
+            'pagination' => [
+                'pageSize' => 50
+            ],
+        ]);
+
+        return $this->render('remains', [
             'dataProvider' => $dataProvider,
         ]);
     }

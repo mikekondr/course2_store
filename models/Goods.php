@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $name
  * @property string $vendor
  * @property int|null $category_id
+ * @property int $expiry
  *
  * @property Categories $category
  */
@@ -33,7 +34,7 @@ class Goods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id'], 'integer'],
+            [['category_id', 'expiry'], 'integer'],
             [['name', 'vendor', 'category_id'], 'required'],
             [['name'], 'string', 'max' => 150],
             [['vendor'], 'string', 'max' => 50],
@@ -55,6 +56,7 @@ class Goods extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'category_name' => Yii::t('app/categories', 'Name'),
+            'expiry' => Yii::t('app/goods', 'Expiry'),
         ];
     }
 

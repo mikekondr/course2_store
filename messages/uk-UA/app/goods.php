@@ -13,6 +13,8 @@ return [
     'Good ID' => 'ID товару',
     'Consignment ID' => 'ID партії',
     'Consignment' => 'Партія',
+    'Expiry' => 'Термін придатності (днів)',
+    'Expire' => 'Вжити до',
 
     'Create Goods' => 'Створення товару',
     'Update Goods' => 'Оновлення товару',

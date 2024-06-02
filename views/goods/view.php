@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'vendor',
             //'category_id',
             'category.name',
+            'expiry',
             'created_at:datetime',
             'updated_at:datetime',
         ],

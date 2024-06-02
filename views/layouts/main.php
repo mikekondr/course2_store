@@ -62,8 +62,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'visible' => Yii::$app->user->can('viewOperations'),
         ],
         [
+            'label' => Yii::t('app', 'Goods circulation'),
+            'url' => ['/remains/circulation'],
+            'visible' => Yii::$app->user->can('viewRemains'),
+        ]
+    ];
+
+    $reports = [
+        [
             'label' => Yii::t('app/goods', 'Remains'),
-            'url' => ['/remains/index'],
+            'url' => ['/remains/remains'],
             'visible' => Yii::$app->user->can('viewRemains'),
         ]
     ];
@@ -72,6 +80,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         //['label' => 'Home', 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'Classifiers'), 'items' => $classifiers, 'visible' => in_array(true, array_column($classifiers, 'visible'))],
         ['label' => Yii::t('app', 'Goods circulation'), 'items' => $goods_moves, 'visible' => in_array(true, array_column($goods_moves, 'visible'))],
+        ['label' => Yii::t('app', 'Reports'), 'items' => $reports, 'visible' => in_array(true, array_column($reports, 'visible'))],
         ['label' => 'About', 'url' => ['/site/about'], 'visible' => Yii::$app->user->can('editOrders')],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];

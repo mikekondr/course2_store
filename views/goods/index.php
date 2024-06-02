@@ -46,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'category_name',
                 'value' => 'category.name',
             ],
+            'expiry',
         ], MyHelpers::getCreatedUpdatedGridCols(), [
             [
                 'class' => ActionColumn::class,

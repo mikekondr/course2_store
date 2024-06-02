@@ -16,6 +16,7 @@ return [
 
     'Classifiers' => 'Довідники',
     'Goods circulation' => 'Рух товарів',
+    'Reports' => 'Звіти',
 
     'Logout' => 'Вийти',
     'Login' => 'Увійти',

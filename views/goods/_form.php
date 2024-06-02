@@ -19,6 +19,8 @@ Icon::map($this);
 
     <?= $form->field($model, 'category_id')->dropDownList(\app\controllers\CategoriesController::get_categories()); ?>
 
+    <?= $form->field($model, 'expiry')->textInput(['type'=>'numeric']) ?>
+
     <div class="form-group">
         <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
         <?= Html::submitButton(Yii::t('app','Save'), ['class' => 'btn btn-danger']) ?>
