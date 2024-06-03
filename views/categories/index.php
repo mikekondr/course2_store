@@ -52,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'rowOptions' => function ($model, $key, $index, $column) {
             return [
                 'data-id' => $model->id,
-                //'onclick' => 'location.href="'. Url::toRoute(['/categories/view', 'id' => $model->id]) .'"',
                 'onclick' => 'show_modal(' . $model->id . ', "'. Html::encode($model->name) .'", "' . Url::toRoute(["categories/view-modal"]) .'")',
                 'style' => 'cursor:pointer',
             ];

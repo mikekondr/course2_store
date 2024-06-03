@@ -13,14 +13,16 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $doc_type 1-input, 2-output, 3 - order
  * @property int $doc_state True-active, False-draft
- * @property string $doc_date
+ * @property int $doc_date
  * @property int $author_id
  * @property int $counterparty
  * @property int $created_at
  * @property int $updated_at
  *
  * @property DocumentRows[] $documentRows
- * @property Users author
+ * @property Users $author
+ * @property string $date
+ * @property string $doc_name
  */
 class Documents extends ActiveRecord
 {
@@ -52,6 +54,7 @@ class Documents extends ActiveRecord
     {
         return [
             [['doc_type', 'doc_date'], 'required'],
+            [['date', 'doc_name'], 'safe'],
             [['doc_state', 'counterparty'], 'integer'],
             [['doc_type'], 'string', 'max' => 1],
         ];
@@ -67,6 +70,7 @@ class Documents extends ActiveRecord
             'doc_type' => Yii::t('app/docs', 'Doc Type'),
             'doc_state' => Yii::t('app/docs', 'Doc State'),
             'doc_date' => Yii::t('app/docs', 'Doc Date'),
+            'date' => Yii::t('app/docs', 'Doc Date'),
             'author_id' => Yii::t('app/docs', 'Author'),
             'counterparty' => Yii::t('app/docs', 'Counterparty'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -97,20 +101,10 @@ class Documents extends ActiveRecord
                     return Yii::$app->user->id;
                 },
             ],
-            [
-                'class' => AttributeBehavior::class,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'doc_date',
-                    ActiveRecord::EVENT_BEFORE_UPDATE => 'doc_date',
-                ],
-                'value' => function ($event) {
-                    return Yii::$app->formatter->asDate($this->doc_date, 'php:Y-m-d');
-                }
-            ]
         ];
     }
 
-    public function beforeSave($insert)
+    private function removeRelatedData()
     {
         if ($this->doc_type == self::DOCTYPE_INPUT) {
             //remove old remains and consignments
@@ -121,7 +115,18 @@ class Documents extends ActiveRecord
             Remains::deleteAll(['document_id' => $this->id]);
         }
 
-        return parent::beforeSave($insert);
+        return true;
+    }
+
+    public function beforeSave($insert)
+    {
+        return $this->removeRelatedData() && parent::beforeSave($insert);
+    }
+
+    public function beforeDelete()
+    {
+
+        return $this->removeRelatedData() && parent::beforeDelete();
     }
 
     /**
@@ -137,6 +142,21 @@ class Documents extends ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(Users::class, ['id' => 'author_id']);
+    }
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDateTime($this->doc_date);
+    }
+
+    public function setDate($date)
+    {
+        $this->doc_date = Yii::$app->formatter->asTimestamp($date);
+    }
+
+    public function getDoc_Name()
+    {
+        return Yii::t('app/docs', self::DOCTYPE_NAMES[$this->doc_type]) . ' № ' . $this->id;
     }
 
     public static function getDocumentsTypes(){

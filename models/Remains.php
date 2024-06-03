@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "remains".
@@ -11,10 +13,12 @@ use Yii;
  * @property int $good_id
  * @property int $consignment_id
  * @property int $document_id
+ * @property int $created_at
  * @property float $count
  *
  * @property Goods $good
  * @property Consignments $consignment
+ * @property Documents $document
  */
 class Remains extends \yii\db\ActiveRecord
 {
@@ -32,8 +36,8 @@ class Remains extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['good_id', 'consignment_id', 'count'], 'required'],
-            [['good_id', 'consignment_id'], 'integer'],
+            [['good_id', 'consignment_id', 'count', 'document_id'], 'required'],
+            [['good_id', 'consignment_id', 'document_id'], 'integer'],
             [['count'], 'number'],
         ];
     }
@@ -48,6 +52,24 @@ class Remains extends \yii\db\ActiveRecord
             'good_id' => Yii::t('app/goods', 'Good ID'),
             'consignment_id' => Yii::t('app/goods', 'Consignment ID'),
             'count' => Yii::t('app/goods', 'Count'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'document_id' => Yii::t('app/docs', 'Document ID'),
+        ];
+    }
+
+    public function behaviors() {
+        return [
+            [
+                'class' => AttributeBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'created_at',
+                ],
+                'value' => function ($event) {
+                    return $this->document->created_at;
+                },
+            ],
+
         ];
     }
 
@@ -59,5 +81,10 @@ class Remains extends \yii\db\ActiveRecord
     public function getConsignment()
     {
         return $this->hasOne(Consignments::class, ['id' => 'consignment_id']);
+    }
+
+    public function getDocument()
+    {
+        return $this->hasOne(Documents::class, ['id' => 'document_id']);
     }
 }

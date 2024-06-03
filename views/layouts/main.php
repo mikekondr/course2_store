@@ -73,6 +73,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'label' => Yii::t('app/goods', 'Remains'),
             'url' => ['/remains/remains'],
             'visible' => Yii::$app->user->can('viewRemains'),
+        ],
+        [
+            'label' => Yii::t('app/goods', 'Expired'),
+            'url' => ['/remains/expired'],
+            'visible' => Yii::$app->user->can('viewRemains'),
         ]
     ];
 

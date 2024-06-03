@@ -14,13 +14,14 @@ use app\components\MyHelpers;
 
 $this->title = Yii::t('app/docs', 'Documents');
 $this->params['breadcrumbs'][] = $this->title;
+\app\assets\MyModalViewAsset::register($this);
 ?>
 <div class="documents-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app/docs', 'Create Documents'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Add new'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -28,10 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
+        'rowOptions' => function ($model, $key, $index, $column) {
+            return [
+                'data-id' => $model->id,
+                'onclick' => "window.location.href = '" . Url::toRoute(["documents/update", "id" => $model->id]) . "'",
+                'style' => 'cursor:pointer',
+            ];
+        },
         'columns' => ArrayHelper::merge([
             'id',
-            'doc_date:date',
+            [
+                'attribute' => 'doc_date',
+                'value' => 'date',
+            ],
             [
                 'attribute' => 'doc_type',
                 'value' => function($model) {

@@ -16,7 +16,7 @@ class m240531_162809_crate_documents_tables extends Migration
             'id' => $this->primaryKey(),
             'doc_type' => $this->integer(1)->notNull()->comment('1-input, 2-output, 3-order'),
             'doc_state' => $this->boolean()->notNull()->defaultValue(0)->comment('True-active, False-draft'),
-            'doc_date' => $this->dateTime()->notNull()->defaultValue(new \yii\db\Expression('NOW()')),
+            'doc_date' => $this->integer()->notNull(),
             'author_id' => $this->integer()->notNull(),
             'counterparty' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),

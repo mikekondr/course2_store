@@ -24,6 +24,7 @@ class m240531_153212_create_remains_table extends Migration
             'good_id' => $this->integer()->notNull(),
             'consignment_id' => $this->integer()->notNull(),
             'count' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->notNull(),
         ]);
 
         $this->createIndex('uk_good_id_remains', '{{%remains}}', ['good_id', 'consignment_id'], true);

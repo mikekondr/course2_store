@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app/goods', 'Remains');
+$this->title = isset($title) ? $title : Yii::t('app/goods', 'Remains');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="remains-index">

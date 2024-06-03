@@ -37,7 +37,7 @@ class RemainsController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC,
+                    'created_at' => SORT_ASC,
                 ]
             ],
         ]);
@@ -64,6 +64,31 @@ class RemainsController extends Controller
 
         return $this->render('remains', [
             'dataProvider' => $dataProvider,
+            'title' => Yii::t('app/goods', 'Remains'),
+        ]);
+    }
+
+    public function actionExpired()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => (new Query())
+                ->select("r.good_id, r.consignment_id, SUM(r.count) count, g.name,
+                    c.created_at cons_date, c.price, g.expiry")
+                ->from(['r'=>'remains'])
+                ->where(['>', ':now - (c.created_at + g.expiry * 24*60*60)', 0])
+                ->params([':now' => time()])
+                ->groupBy('good_id, consignment_id')
+                ->leftJoin(['g'=>'goods'], 'g.id = r.good_id')
+                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id'),
+            'pagination' => [
+                'pageSize' => 50
+            ],
+        ]);
+
+
+        return $this->render('remains', [
+            'dataProvider' => $dataProvider,
+            'title' => Yii::t('app/goods', 'Expired'),
         ]);
     }
 

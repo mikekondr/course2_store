@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "document_rows".
@@ -16,7 +17,7 @@ use Yii;
  *
  * @property Documents $document
  */
-class DocumentRows extends \yii\db\ActiveRecord
+class DocumentRows extends ActiveRecord
 {
     /**
      * these are flags that are used by the form to dictate how the loop will handle each item
@@ -26,7 +27,6 @@ class DocumentRows extends \yii\db\ActiveRecord
     const UPDATE_TYPE_DELETE = 'delete';
 
     const SCENARIO_BATCH_UPDATE = 'batchUpdate';
-
 
     private $_updateType;
 
@@ -99,15 +99,16 @@ class DocumentRows extends \yii\db\ActiveRecord
             $cons = new Consignments();
             $cons->good_id = $this->good_id;
             $cons->price = $this->price;
-            $cons->created_at = Yii::$app->formatter->asTimestamp($this->document->doc_date);
             $cons->document_id = $this->document_id;
+            $cons->created_at = $this->document->doc_date;
             $cons->save();
 
             $rem = new Remains();
             $rem->good_id = $this->good_id;
             $rem->count = $this->count;
             $rem->consignment_id = $cons->id;
-            $rem->document_id = $this->id;
+            $rem->document_id = $this->document_id;
+            $rem->created_at = $this->document->doc_date;
             $rem->save();
 
         } else if ($this->document->doc_state && $this->document->doc_type == Documents::DOCTYPE_OUTPUT) {

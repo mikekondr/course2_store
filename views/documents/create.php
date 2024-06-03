@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\Documents $model */
 /** @var \app\models\DocumentRows[] $rows title */
 
-$this->title = Yii::t('app/docs', 'Create Documents');
+$this->title = Yii::t('app', 'Create {name}', ['name' => 'документу']);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/docs', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

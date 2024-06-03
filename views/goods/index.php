@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php if (Yii::$app->user->can('editClassifiers')): ?>
-            <?= Html::a(Yii::t('app/goods', 'Create Goods'), ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('app', 'Add new'), ['create'], ['class' => 'btn btn-success']) ?>
         <?php endif; ?>
     </p>
 

@@ -3,10 +3,9 @@
 return [
     'Documents' => 'Документи',
 
-    'Create Documents' => 'Створення документу',
-    'Update Documents' => 'Оновлення документу',
-
     'ID' => 'Номер',
+    'Document ID' => 'Номер документа',
+    'Document' => 'Документ',
     'Doc Date' => 'Дата',
     'Doc Type' => 'Операція',
     'Doc State' => 'Стан',
@@ -19,4 +18,7 @@ return [
 
     'Active' => 'Актуальний',
     'Draft' => 'Чернетка',
+
+    'Count' => 'Кількість',
+    'Price' => 'Ціна'
 ];

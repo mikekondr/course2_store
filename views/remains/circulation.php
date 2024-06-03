@@ -23,8 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            //'good_id',
+            'created_at:datetime',
+            [
+                'attribute' => 'document_id',
+                'value' => function ($model) {
+                    return $model->document->doc_name;
+                }
+            ],
             [
                 'attribute' => 'good_id',
                 'label' => Yii::t('app/goods', 'Good'),

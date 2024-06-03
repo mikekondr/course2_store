@@ -63,9 +63,10 @@ $config = [
         ],
         'formatter' => [
             'dateFormat' => 'dd.MM.yyyy',
-            'datetimeFormat' => 'HH:mm dd.MM.yyyy',
+            'datetimeFormat' => 'dd.MM.yyyy HH:mm ',
             'timeFormat' => 'HH:mm',
             'timeZone' => 'Europe/Kiev',
+            'defaultTimeZone' => 'Europe/Kiev',
         ],
     ],
     'params' => $params,

@@ -7,8 +7,10 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\grid\GridView;
 use yii\bootstrap5\Modal;
-use yii\jui\DatePicker;
+use kartik\datetime\DateTimePicker;
 use kartik\icons\Icon;
+use yii\widgets\Pjax;
+
 Icon::map($this);
 
 /** @var yii\web\View $this */
@@ -35,9 +37,13 @@ Icon::map($this);
 
     <div class="row">
         <div class="col-3">
-            <?= $form->field($model, 'doc_date', ['horizontalCssClasses' => ['wrapper' => 'col-sm-8']])
-                ->widget(DatePicker::class, [
+            <?= $form->field($model, 'date', ['horizontalCssClasses' => ['wrapper' => 'col-sm-8']])
+                ->widget(DateTimePicker::class, [
                     'options' => ['class' => 'form-control'],
+                    'type' => DateTimePicker::TYPE_INPUT,
+                    'pluginOptions' => [
+                        'format' => 'dd.mm.yyyy hh:ii',
+                    ],
                 ]) ?>
         </div>
         <div class="col-3">
@@ -73,6 +79,7 @@ Icon::map($this);
         'rowOptions' => function($model, $key, $index, $grid) {
             return ['class' => "document-row document-row-$index"];
         },
+        'showFooter' => true,
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn',
@@ -131,20 +138,23 @@ Icon::map($this);
                     'delete' => function($url, $model, $key) {
                         return Html::a(Icon::show('trash'), '#', [
                             'class' => ['delete-button'],
-                            'data-target' => "document-row-$key",
+                            'data-target' => 'document-row-$key',
                         ]);
                     }
                 ],
                 'contentOptions' => [
                     'class' => 'align-middle text-center',
                 ],
+                'footer' => Html::submitButton(Icon::show('plus-sign'), ['name' => 'addRow', 'value' => 'true', 'class' => 'btn link-primary']),
+                'footerOptions' => [
+                    'class' => 'align-middle text-center',
+                ]
             ]
         ],
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app/docs', 'Save'), ['class' => 'btn btn-success']) ?>
-        <?= Html::submitButton('Add row', ['name' => 'addRow', 'value' => 'true', 'class' => 'btn btn-info']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

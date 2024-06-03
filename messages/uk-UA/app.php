@@ -7,10 +7,14 @@ return [
     'Save' => 'Зберегти',
     'Update' => 'Оновлення',
     'Add new' => 'Додати',
+    'Add row' => 'Додати рядок',
     'Edit' => 'Редагувати',
     'Delete' => 'Видалити',
     'Search' => 'Пошук',
     'Reset' => 'Скинути',
+
+    'Create {name}' => "Створення {name}",
+    'Update {name}' => "Редагування {name}",
 
     'Are you sure you want to delete this item?' => 'Ви впевнені, що хочете видалити цей запис?',
 
