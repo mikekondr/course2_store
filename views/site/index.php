@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 
 use app\models\Documents;
+use yii\bootstrap5\Html;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 
@@ -53,6 +54,7 @@ $this->title = 'Store';
                                 ],
                             ],
                         ]);?>
+                        <?= Html::a('Всі документи...', ['documents/index'], ['class' => 'text-end']) ?>
                     </div>
                 </div>
             </div>
@@ -112,6 +114,7 @@ $this->title = 'Store';
                             'count',
                         ],
                     ]);?>
+                    <?= Html::a('Повний звіт...', ['remains/expired']) ?>
                 </div>
             </div>
 
@@ -154,6 +157,7 @@ $this->title = 'Store';
                                 ],
                             ],
                         ]);?>
+                        <?= Html::a('Всі документи...', ['documents/index']) ?>
                     </div>
                 </div>
             </div>
@@ -194,7 +198,8 @@ $this->title = 'Store';
                             ],
                             'count',
                         ],
-                    ]);?>
+                    ]) ?>
+                    <?= Html::a('Повний звіт...', ['remains/remains']) ?>
                 </div>
             </div>
 
@@ -242,6 +247,7 @@ $this->title = 'Store';
                                 ],
                             ],
                         ]);?>
+                        <?= Html::a('Всі документи...', ['documents/index']) ?>
                     </div>
                 </div>
             </div>
@@ -282,7 +288,8 @@ $this->title = 'Store';
                                 ],
                                 'count',
                             ],
-                        ]);?>
+                        ]) ?>
+                        <?= Html::a('Повний звіт...', ['remains/remains']) ?>
                     </div>
                 </div>
             <?php endif; ?>
