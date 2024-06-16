@@ -83,7 +83,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 || Yii::$app->user->can('viewOwnOrders'),
         ],
         ['label' => Yii::t('app', 'Reports'), 'items' => $reports, 'visible' => in_array(true, array_column($reports, 'visible'))],
-        ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact'], 'visible' => Yii::$app->user->isGuest || Yii::$app->authManager->checkAccess(Yii::$app->user->identity->id, 'client')],
+        ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact'], 'visible' => Yii::$app->user->isGuest
+            || Yii::$app->authManager->checkAccess(Yii::$app->user->identity->id, 'client')
+            || Yii::$app->authManager->checkAccess(Yii::$app->user->identity->id, 'guest')],
     ];
 
     $menuItems[] = Yii::$app->user->isGuest

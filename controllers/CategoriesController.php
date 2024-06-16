@@ -32,7 +32,7 @@ class CategoriesController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view'],
+                            'actions' => ['index', 'view', 'view-modal'],
                             'allow' => true,
                             'permissions' => ['viewClassifiers'],
                         ],

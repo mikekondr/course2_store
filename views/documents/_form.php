@@ -169,7 +169,7 @@ Icon::map($this);
 <?php
 Modal::begin([
     'id' => 'select-good-modal',
-    'title' => '<h2>Hello world</h2>',
+    'title' => '<h2>Вибір товару</h2>',
     'toggleButton' => false,
     'size' => 'modal-lg',
 ]);
