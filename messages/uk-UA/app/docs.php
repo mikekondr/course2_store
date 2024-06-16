@@ -20,5 +20,7 @@ return [
     'Draft' => 'Чернетка',
 
     'Count' => 'Кількість',
-    'Price' => 'Ціна'
+    'Price' => 'Ціна',
+
+    'Not enough remaining consignments for {name}' => 'Недостатньо доступного залишку {name}',
 ];

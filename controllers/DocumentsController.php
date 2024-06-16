@@ -7,6 +7,7 @@ use app\models\Documents;
 use app\models\DocumentsSearch;
 use Yii;
 use yii\base\Model;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,6 +29,21 @@ class DocumentsController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'permissions' => ['viewOperations', 'viewOrders', 'viewOwnOrders'],
+                        ],
+                        [
+                            'actions' => ['create', 'update', 'delete'],
+                            'allow' => true,
+                            'permissions' => ['editOperations', 'editOrders', 'editOwnOrders'],
+                        ],
                     ],
                 ],
             ]
@@ -59,6 +75,8 @@ class DocumentsController extends Controller
     {
         $model = new Documents();
         $model->doc_date = time();
+        if (Yii::$app->user->can('editOwnOrders'))
+            $model->doc_type = 3;
         $rows = [];
 
         if ($this->request->isPost) {

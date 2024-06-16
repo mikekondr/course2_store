@@ -7,13 +7,34 @@ return [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'Manage users',
     ],
+    'viewGoods' => [
+        'type' => Item::TYPE_PERMISSION,
+        'description' => 'View goods',
+    ],
     'viewClassifiers' => [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'View classifiers',
+        'children' => [
+            'viewGoods',
+        ]
     ],
     'viewRemains' => [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'View remains of goods and it\'s consignments'
+    ],
+    'viewExpires' => [
+        'type' => Item::TYPE_PERMISSION,
+        'description' => 'View and manage goods circulations',
+        'children' => [
+            'viewRemains',
+        ]
+    ],
+    'manageRemains' => [
+        'type' => Item::TYPE_PERMISSION,
+        'description' => 'View and manage goods circulations',
+        'children' => [
+            'viewExpires',
+        ]
     ],
     'editClassifiers' => [
         'type' => Item::TYPE_PERMISSION,
@@ -31,7 +52,7 @@ return [
         'description' => 'Edit (add, update, delete) classifiers',
         'children' => [
             'viewOperations',
-        ]
+        ],
     ],
     'viewOrders' => [
         'type' => Item::TYPE_PERMISSION,
@@ -42,12 +63,11 @@ return [
         'description' => 'Edit (add, update, delete) classifiers',
         'children' => [
             'viewOrders',
-        ]
+        ],
     ],
     'viewOwnOrders' => [
         'type' => Item::TYPE_PERMISSION,
         'description' => 'View own orders',
-        'ruleName' => 'isAuthor',
     ],
     'editOwnOrders' => [
         'type' => Item::TYPE_PERMISSION,
@@ -55,13 +75,14 @@ return [
         'children' => [
             'viewOwnOrders',
         ],
-        'ruleName' => 'isAuthor',
     ],
 
     'guest' => [
         'type' => Item::TYPE_ROLE,
         'description' => 'Guest',
-        'children' => [],
+        'children' => [
+            'viewGoods'
+        ],
     ],
     'manager' => [
         'type' => Item::TYPE_ROLE,
@@ -71,7 +92,7 @@ return [
             'editClassifiers',
             'editOperations',
             'editOrders',
-            'viewRemains',
+            'manageRemains'
         ],
     ],
     'storekeeper' => [
@@ -81,7 +102,7 @@ return [
             'viewClassifiers',
             'editOperations',
             'viewOrders',
-            'viewRemains',
+            'viewExpires',
         ],
     ],
     'client' => [

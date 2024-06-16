@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Categories;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,21 @@ class CategoriesController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'permissions' => ['viewClassifiers'],
+                        ],
+                        [
+                            'actions' => ['update', 'delete'],
+                            'allow' => true,
+                            'permissions' => ['editClassifiers'],
+                        ],
                     ],
                 ],
             ]

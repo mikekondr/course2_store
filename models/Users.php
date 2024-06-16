@@ -134,6 +134,15 @@ class Users extends ActiveRecord implements IdentityInterface
         );
     }
 
+    public function beforeSave($insert)
+    {
+        if ($insert)
+        {
+            $this->password = Yii::$app->security->generatePasswordHash($this->new_password);
+            $this->role = "guest";
+        }
+        return parent::beforeSave($insert);
+    }
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
@@ -143,5 +152,13 @@ class Users extends ActiveRecord implements IdentityInterface
                 Yii::$app->authManager->getRole($assignment->roleName),
                 $this->id);
         Yii::$app->authManager->assign(Yii::$app->authManager->getRole($this->role), $this->id);
+    }
+
+    public function afterDelete()
+    {
+        foreach (Yii::$app->authManager->getAssignments($this->id) as $assignment)
+            Yii::$app->authManager->revoke(
+                Yii::$app->authManager->getRole($assignment->roleName),
+                $this->id);
     }
 }

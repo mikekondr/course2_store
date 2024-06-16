@@ -52,11 +52,12 @@ class RemainsController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => (new Query())
                 ->select("r.good_id, r.consignment_id, SUM(r.count) count, g.name,
-                    c.created_at cons_date, c.price, g.expiry")
+                    c.created_at cons_date, c.price")
                 ->from(['r'=>'remains'])
                 ->groupBy('good_id, consignment_id')
                 ->leftJoin(['g'=>'goods'], 'g.id = r.good_id')
-                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id'),
+                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id')
+                ->having('SUM(r.count) > 0'),
             'pagination' => [
                 'pageSize' => 50
             ],
@@ -65,6 +66,7 @@ class RemainsController extends Controller
         return $this->render('remains', [
             'dataProvider' => $dataProvider,
             'title' => Yii::t('app/goods', 'Remains'),
+            'hasExpirity' => false,
         ]);
     }
 
@@ -79,7 +81,8 @@ class RemainsController extends Controller
                 ->params([':now' => time()])
                 ->groupBy('good_id, consignment_id')
                 ->leftJoin(['g'=>'goods'], 'g.id = r.good_id')
-                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id'),
+                ->leftJoin(['c'=>'consignments'], 'c.id = r.consignment_id')
+                ->having('SUM(r.count) > 0'),
             'pagination' => [
                 'pageSize' => 50
             ],
@@ -89,6 +92,7 @@ class RemainsController extends Controller
         return $this->render('remains', [
             'dataProvider' => $dataProvider,
             'title' => Yii::t('app/goods', 'Expired'),
+            'hasExpirity' => true,
         ]);
     }
 

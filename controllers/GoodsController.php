@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Goods;
 use app\models\GoodsSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,21 @@ class GoodsController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'permissions' => ['viewGoods'],
+                        ],
+                        [
+                            'actions' => ['update', 'delete'],
+                            'allow' => true,
+                            'permissions' => ['editClassifiers'],
+                        ],
                     ],
                 ],
             ]

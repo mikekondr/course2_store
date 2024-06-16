@@ -46,25 +46,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         [
             'label' => Yii::t('app/goods', 'Goods'),
             'url' => ['/goods/index'],
-            'visible' => Yii::$app->user->can('viewClassifiers'),
+            'visible' => Yii::$app->user->can('viewGoods'),
         ],
         [
             'label' => Yii::t('app/categories', 'Categories'),
             'url' => ['/categories/index'],
             'visible' => Yii::$app->user->can('viewClassifiers'),
-        ]
-    ];
-
-    $goods_moves = [
-        [
-            'label' => Yii::t('app/docs', 'Documents'),
-            'url' => ['/documents/index'],
-            'visible' => Yii::$app->user->can('viewOperations'),
-        ],
-        [
-            'label' => Yii::t('app', 'Goods circulation'),
-            'url' => ['/remains/circulation'],
-            'visible' => Yii::$app->user->can('viewRemains'),
         ]
     ];
 
@@ -77,17 +64,26 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         [
             'label' => Yii::t('app/goods', 'Expired'),
             'url' => ['/remains/expired'],
-            'visible' => Yii::$app->user->can('viewRemains'),
+            'visible' => Yii::$app->user->can('viewExpires'),
+        ],
+        [
+            'label' => Yii::t('app', 'Goods circulation'),
+            'url' => ['/remains/circulation'],
+            'visible' => Yii::$app->user->can('manageRemains'),
         ]
     ];
 
     $menuItems = [
-        //['label' => 'Home', 'url' => ['/site/index']],
         ['label' => Yii::t('app', 'Classifiers'), 'items' => $classifiers, 'visible' => in_array(true, array_column($classifiers, 'visible'))],
-        ['label' => Yii::t('app', 'Goods circulation'), 'items' => $goods_moves, 'visible' => in_array(true, array_column($goods_moves, 'visible'))],
+        [
+            'label' => Yii::t('app/docs', 'Documents'),
+            'url' => ['/documents/index'],
+            'visible' => Yii::$app->user->can('viewOperations')
+                || Yii::$app->user->can('viewOrders')
+                || Yii::$app->user->can('viewOwnOrders'),
+        ],
         ['label' => Yii::t('app', 'Reports'), 'items' => $reports, 'visible' => in_array(true, array_column($reports, 'visible'))],
-        ['label' => 'About', 'url' => ['/site/about'], 'visible' => Yii::$app->user->can('editOrders')],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact'], 'visible' => !Yii::$app->user->isGuest],
     ];
 
     $menuItems[] = Yii::$app->user->isGuest

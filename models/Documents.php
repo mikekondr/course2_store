@@ -162,6 +162,11 @@ class Documents extends ActiveRecord
     public static function getDocumentsTypes(){
         $res = [];
         foreach (self::DOCTYPE_NAMES as $key => $value) {
+            if ($key == self::DOCTYPE_ORDER && !(
+                Yii::$app->user->can('editOrders') || Yii::$app->user->can('editOwnOrders')
+                )) {
+                continue;
+            }
             $res[$key] = Yii::t('app/docs', $value);
         }
         return $res;

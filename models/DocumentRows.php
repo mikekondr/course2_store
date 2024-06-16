@@ -139,7 +139,7 @@ class DocumentRows extends ActiveRecord
             }
 
             if ($total > 0) {
-                Yii::$app->session->setFlash('error', 'Not enough remaining consignments for ' . $this->good->name);
+                Yii::$app->session->setFlash('error', Yii::t('app/docs', 'Not enough remaining consignments for {name}', ['name' => $this->good->name]));
                 return false;
             }
         }

@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\RegisterForm;
+use app\models\Users;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -23,11 +25,11 @@ class SiteController extends Controller
                 //'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['error', 'login'],
+                        'actions' => ['error', 'login', 'register'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index', 'logout', 'contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -69,6 +71,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->authManager->checkAccess(Yii::$app->user->identity->id, 'guest')) {
+            return $this->redirect(['goods/index']);
+        }
         return $this->render('index');
     }
 
@@ -90,6 +95,31 @@ class SiteController extends Controller
 
         $model->password = '';
         return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionRegister()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new RegisterForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = new Users();
+            $user->username = $model->username;
+            $user->new_password = $model->password;
+            $user->fullname = $model->fullname;
+            $user->save();
+
+            if ($user->validate())
+                return $this->goHome();
+            else
+                return $this->goBack();
+        }
+
+        return $this->render('register', [
             'model' => $model,
         ]);
     }
@@ -122,15 +152,5 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

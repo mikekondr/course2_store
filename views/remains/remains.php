@@ -8,6 +8,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var bool $hasExpirity */
 
 $this->title = isset($title) ? $title : Yii::t('app/goods', 'Remains');
 $this->params['breadcrumbs'][] = $this->title;
@@ -48,7 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         return $dt->format('d.m.Y');
                     }
-                }
+                },
+                'visible' => $hasExpirity,
             ],
             'count',
         ],

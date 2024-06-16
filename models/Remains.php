@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "remains".
@@ -55,6 +57,21 @@ class Remains extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AttributeBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'created_at',
+                ],
+                'value' => function ($event) {
+                    return $this->document->created_at;
+                },
+            ],
+        ];
+    }
     public function getGood()
     {
         return $this->hasOne(Goods::class, ['id' => 'good_id']);

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -41,7 +42,22 @@ class DocumentsSearch extends Documents
     {
         $query = Documents::find();
 
-        // add conditions that should always apply here
+        $viewOper = Yii::$app->user->can('viewOperations');
+        $viewOrder = Yii::$app->user->can('viewOrders');
+        $viewOwn = Yii::$app->user->can('viewOwnOrders');
+
+        if ($viewOwn) {
+            $query->andFilterWhere([
+                'author_id' => Yii::$app->user->id,
+                'doc_type' => 3,
+            ]);
+        } else if ($viewOrder && !$viewOper) {
+            $query->andFilterWhere([
+                'doc_type' => 3,
+            ]);
+        } else if ($viewOper && !$viewOper) {
+            $query->andFilterWhere(['<>', 'doc_type', 3]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

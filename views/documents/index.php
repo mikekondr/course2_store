@@ -71,6 +71,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'width: 80px',
                     'nowrap' => true,
                 ],
+                'visibleButtons' => [
+                    'update' => function (Documents $model) {
+                        if ($model->doc_type == 3)
+                            return Yii::$app->user->can('editOrders')
+                                    || Yii::$app->user->can('editOwnOrders');
+                        else return Yii::$app->user->can('editOperations');
+                    },
+                    'delete' => function (Documents $model) {
+                        if ($model->doc_type == 3)
+                            return Yii::$app->user->can('editOrders')
+                                || Yii::$app->user->can('editOwnOrders');
+                        else return Yii::$app->user->can('editOperations');
+                    }
+                ]
             ],
         ]),
     ]); ?>

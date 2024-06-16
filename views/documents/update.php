@@ -8,8 +8,7 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('app', 'Update {name}', ['name' => $model->doc_name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/docs', 'Documents'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->doc_name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app/docs', 'Update');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="documents-update">
 

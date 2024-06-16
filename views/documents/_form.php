@@ -9,7 +9,6 @@ use yii\grid\GridView;
 use yii\bootstrap5\Modal;
 use kartik\datetime\DateTimePicker;
 use kartik\icons\Icon;
-use yii\widgets\Pjax;
 
 Icon::map($this);
 
@@ -47,8 +46,13 @@ Icon::map($this);
                 ]) ?>
         </div>
         <div class="col-3">
-            <?= $form->field($model, 'doc_type', ['horizontalCssClasses' => ['wrapper' => 'col-sm-8']])
-                ->dropDownList(Documents::getDocumentsTypes())
+            <?php
+            if (Yii::$app->user->can('editOwnOrders'))
+                echo $form->field($model, 'doc_type', ['horizontalCssClasses' => ['wrapper' => 'col-sm-8']])
+                    ->hiddenInput(['value' => 3])->label(false);
+            else
+                echo $form->field($model, 'doc_type', ['horizontalCssClasses' => ['wrapper' => 'col-sm-8']])
+                    ->dropDownList(Documents::getDocumentsTypes());
             ?>
         </div>
         <div class="col-3">
@@ -154,7 +158,8 @@ Icon::map($this);
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Icon::show('backward'), Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index'], ['class' => 'btn btn-success']); ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

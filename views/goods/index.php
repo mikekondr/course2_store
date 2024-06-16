@@ -57,6 +57,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'width: 80px',
                     'nowrap' => true,
                 ],
+                'visibleButtons' => [
+                    'update' => \Yii::$app->user->can('manageClassifiers'),
+                    'delete' => \Yii::$app->user->can('manageClassifiers'),
+                ],
             ],
         ]),
         'rowOptions' => function ($model, $key, $index, $column) {
